@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Lista de usuários</h1>
+
+    <a href="/cadastrar">Cadastre-se</a> <br />
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="users : ${usersList}" th:object="${users}">
+                <td th:text="*{id}">ID</td>
+                <td th:text="*{nome}">Nome</td>
+                <td th:text="*{email}">Email</td>
+                <td><a th:href="@{'/editar/'+${users.id}}">Editar</a></td> &nbsp; &nbsp; &nbsp;
+                <td><a th:href="@{'/deletar/'+${users.id}}">Deletar</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
