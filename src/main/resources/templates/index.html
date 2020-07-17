@@ -31,5 +31,8 @@
             </tr>
         </tbody>
     </table>
+
+    <p>Total de usuários cadastrados:</p>
+    <p th:text="${#response.getHeader('X-Total-Count')}" ></p>
 </body>
 </html>
