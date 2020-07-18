@@ -1,5 +1,7 @@
 package eaj.tads.projeto2.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -100,10 +102,15 @@ public class UsersController {
 
         HttpSession session = request.getSession();
 
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy'EM'HH:mm:ss");
+        Date date = new Date();
+
+        String lastTime = "UltimoAcessoEm"+format.format(date).toString();
+
         Users userLogado = usersService.login(email, password);
         System.out.println(userLogado.toString());
         
-        Cookie cookie = new Cookie("autenticado", userLogado.getNome());
+        Cookie cookie = new Cookie("autenticado", lastTime);
 
         session.setAttribute("autenticacao", true);
         model.addAttribute("userLogado", userLogado);
