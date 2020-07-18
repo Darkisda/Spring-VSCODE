@@ -22,7 +22,7 @@ public class UsersService {
         return usersRepository.findAll();
     }
 
-    public void save(Users users){
+    public void save(Users users) {
         usersRepository.save(users);
     }
 
@@ -42,7 +42,7 @@ public class UsersService {
         return usersRepository.existsById(id);
     }
 
-    public Users login(String email, String password){
+    public Users login(String email, String password) {
         return usersRepository.findByEmailAndPassword(email, password);
     }
 }

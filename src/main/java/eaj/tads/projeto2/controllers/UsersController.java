@@ -25,7 +25,7 @@ import eaj.tads.projeto2.services.UsersService;
 
 @Controller
 public class UsersController {
-    
+
     @Autowired
     UsersService usersService;
 
@@ -37,7 +37,7 @@ public class UsersController {
     public String getHome(Model model, HttpServletResponse response) {
         List<Users> usersList = usersService.findAll();
         model.addAttribute("usersList", usersList);
-        
+
         String count = usersService.count().toString();
         response.setHeader("X-Total-Count", count);
 
@@ -53,15 +53,14 @@ public class UsersController {
 
     @RequestMapping(value = "/salvar", method = RequestMethod.POST)
     public String addUser(@ModelAttribute @Valid Users users, Errors errors) {
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             return "cadastrar";
-        }
-        else {
+        } else {
             usersService.save(users);
             return "redirect:/";
         }
     }
-    
+
     @RequestMapping("/editar/{id}")
     public ModelAndView editUser(@PathVariable(name = "id") Long id) {
         ModelAndView modelAndView = new ModelAndView("editar");
@@ -71,7 +70,6 @@ public class UsersController {
 
         return modelAndView;
     }
-
 
     @RequestMapping("/deletar/{id}")
     public String deleteAnime(@PathVariable(name = "id") Long id) {
@@ -87,17 +85,15 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/perfil", method = RequestMethod.POST)
-    public String autenticar(@ModelAttribute @Valid Users users, Errors errors, 
-                                HttpServletResponse response, 
-                                HttpServletRequest request,
-                                Model model){
+    public String autenticar(@ModelAttribute @Valid Users users, Errors errors, HttpServletResponse response,
+            HttpServletRequest request, Model model) {
 
         var email = users.getEmail();
         var password = users.getPassword();
 
         // if(errors.hasErrors()){
-            
-        //     return "logar";
+
+        // return "logar";
         // }
 
         HttpSession session = request.getSession();
@@ -105,11 +101,11 @@ public class UsersController {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy'EM'HH:mm:ss");
         Date date = new Date();
 
-        String lastTime = "UltimoAcessoEm"+format.format(date).toString();
+        String lastTime = "UltimoAcessoEm" + format.format(date).toString();
 
         Users userLogado = usersService.login(email, password);
         System.out.println(userLogado.toString());
-        
+
         Cookie cookie = new Cookie("autenticado", lastTime);
 
         session.setAttribute("autenticacao", true);
