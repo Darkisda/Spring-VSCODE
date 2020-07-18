@@ -2,7 +2,10 @@ package eaj.tads.projeto2.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,6 @@ public class UsersController {
         model.addAttribute("usersList", usersList);
         
         String count = usersService.count().toString();
-
         response.setHeader("X-Total-Count", count);
 
         return "index";
@@ -48,15 +50,16 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/salvar", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute @Valid Users users, Errors errors ) {
+    public String addUser(@ModelAttribute @Valid Users users, Errors errors) {
         if(errors.hasErrors()){
             return "cadastrar";
-        } else {
-            usersService.add(users);
+        }
+        else {
+            usersService.save(users);
             return "redirect:/";
         }
     }
-
+    
     @RequestMapping("/editar/{id}")
     public ModelAndView editUser(@PathVariable(name = "id") Long id) {
         ModelAndView modelAndView = new ModelAndView("editar");
@@ -67,10 +70,47 @@ public class UsersController {
         return modelAndView;
     }
 
+
     @RequestMapping("/deletar/{id}")
     public String deleteAnime(@PathVariable(name = "id") Long id) {
         usersService.delete(id);
         return "redirect:/";
+    }
+
+    @RequestMapping("/logar")
+    public String loggin(Model model, HttpServletResponse response, HttpServletRequest request) {
+        Users users = new Users();
+        model.addAttribute("users", users);
+        return "logar";
+    }
+
+    @RequestMapping(value = "/perfil", method = RequestMethod.POST)
+    public String autenticar(@ModelAttribute @Valid Users users, Errors errors, 
+                                HttpServletResponse response, 
+                                HttpServletRequest request,
+                                Model model){
+
+        var email = users.getEmail();
+        var password = users.getPassword();
+
+        // if(errors.hasErrors()){
+            
+        //     return "logar";
+        // }
+
+        HttpSession session = request.getSession();
+
+        Users userLogado = usersService.login(email, password);
+        System.out.println(userLogado.toString());
+        
+        Cookie cookie = new Cookie("autenticado", userLogado.getNome());
+
+        session.setAttribute("autenticacao", true);
+        model.addAttribute("userLogado", userLogado);
+        response.addCookie(cookie);
+
+        return "/perfil";
+
     }
 
 }

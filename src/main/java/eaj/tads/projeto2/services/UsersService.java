@@ -10,7 +10,7 @@ import eaj.tads.projeto2.repository.UsersRepository;
 
 @Service
 public class UsersService {
-    
+
     @Autowired
     private UsersRepository usersRepository;
 
@@ -22,7 +22,7 @@ public class UsersService {
         return usersRepository.findAll();
     }
 
-    public void add(Users users){
+    public void save(Users users){
         usersRepository.save(users);
     }
 
@@ -34,7 +34,15 @@ public class UsersService {
         usersRepository.deleteById(id);
     }
 
-    public Long count(){
+    public Long count() {
         return usersRepository.count();
+    }
+
+    public boolean exist(Long id) {
+        return usersRepository.existsById(id);
+    }
+
+    public Users login(String email, String password){
+        return usersRepository.findByEmailAndPassword(email, password);
     }
 }

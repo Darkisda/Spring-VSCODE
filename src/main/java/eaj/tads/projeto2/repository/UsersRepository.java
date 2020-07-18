@@ -9,5 +9,6 @@ import eaj.tads.projeto2.models.Users;
 public interface UsersRepository extends JpaRepository<Users, Long>{
     
     List<Users> findByEmail(String email);
-    List<Users> findByEmailAndPassword(String email, String password);
+    Users findByEmailAndPassword(String email, String password);
+
 }

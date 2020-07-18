@@ -3,36 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+    <title>TADS-Social</title>
 </head>
 <body>
+    <div class="container">
+        <div class="content-header">
+            <h1>TADS-Social</h1>
+            <h4>Bem vindo!</h4>
 
-    <h1>Lista de usuários</h1>
+            <div class="x-count">
+                <p>Total de usuários cadastrados:</p>
+                <p th:text="${#response.getHeader('X-Total-Count')}" ></p>
+            </div>
 
-    <a href="/cadastrar">Cadastre-se</a> <br />
+        </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr th:each="users : ${usersList}" th:object="${users}">
-                <td th:text="*{id}">ID</td>
-                <td th:text="*{nome}">Nome</td>
-                <td th:text="*{email}">Email</td>
-                <td><a th:href="@{'/editar/'+${users.id}}">Editar</a></td> &nbsp; &nbsp; &nbsp;
-                <td><a th:href="@{'/deletar/'+${users.id}}">Deletar</a></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p>Total de usuários cadastrados:</p>
-    <p th:text="${#response.getHeader('X-Total-Count')}" ></p>
+        <div class="buttoms-group">
+            <div class="loggin-group">
+                <p>Já possui uma conta?</p>
+                <a class="button" href="/logar">Logar</a>
+            </div>
+            <div class="register-group">
+                <p>É novo por aqui? Cadastre-se!</p>
+                <a class="button" href="/cadastrar">Cadastrar</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

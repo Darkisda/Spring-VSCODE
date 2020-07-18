@@ -3,19 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
     <title>Editar</title>
 </head>
 <body>
 
-    <form action="#" th:action="@{/salvar}" method="POST" th:object="${users}">
+    <div class="container">
+        <div class="cadastrar">
+            <form action="#" th:action="@{/salvar}" method="POST" th:object="${users}">
         
-        <input type="hidden" th:field="*{id}" readonly/><br />
-        <label for="nome">Nome:</label> <br/>
-        <input type="text" name="nome" id="nome" th:field="*{nome}"> <br/>
-
-        <button type="submit">Salvar</button>
-
-    </form>
+                <input type="hidden" th:field="*{id}" readonly/><br />
+                <label for="nome">Nome:</label> <br/>
+                <input type="text" name="nome" id="nome" th:field="*{nome}"> <br/>
+                <small th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" ></small> <br/>
+        
+                <label for="email">Email:</label> <br/>
+                <input type="email" name="email" id="email" th:field="*{email}" > <br/>
+                <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" ></small> <br/>
+                
+                <label for="password">Password:</label> <br/>
+                <input type="password" name="password" id="password" th:field="*{password}" > <br/>
+                <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></small> <br/>
+        
+                <button type="submit" class="button">Salvar</button>
+        
+            </form>
+        </div>
+    
+    </div>
 
 </body>
 </html>

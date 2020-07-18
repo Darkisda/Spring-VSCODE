@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container" th:object=${userLogado}>
+        <div class="perfil-header">
+            <h1>Olá: </h1>
+            <h1 class="username" th:text="*{nome}">nome:</h1>
+            <small class="emailogado" th:text="*{email}" ></small>
+
+            <a th:href="@{'/editar/'+*{id}}">Editar Usuário</a>
+            <a th:href="@{'/deletar/'+*{id}}">Deletar Usuário</a>
+        </div>
+
+    </div>
+</body>
+</html>
